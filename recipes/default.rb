@@ -45,9 +45,8 @@ end
     end
 end
 
-execute "deploy apache config" do
-  command "mv /etc/nagiosgraph/nagiosgraph-apache.conf /etc/apache2/conf.d/nagiosgraph.conf"
-  creates "/etc/apache2/conf.d/nagiosgraph.conf"
-  action :run
-  notifies :reload, "service[apache2]", :immediately
+include_recipe 'apache2'
+apache_conf 'nagiosgraph' do
+  source 'nagiosgraph-apache.conf.erb'
+  enable true
 end
