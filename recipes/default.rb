@@ -16,7 +16,7 @@
     end
 end
 
-subversion "#{Chef::Config[:file_cache_path]}/nagiosgraph" do
+subversion "/usr/local/src/nagiosgraph" do
     repository "https://svn.code.sf.net/p/nagiosgraph/code/trunk/nagiosgraph"
     revision "578"
     action :sync
@@ -24,13 +24,13 @@ subversion "#{Chef::Config[:file_cache_path]}/nagiosgraph" do
 end
 
 execute "nagiosgraph check prerequisites" do
-    cwd "#{Chef::Config[:file_cache_path]}/nagiosgraph"
+    cwd "/usr/local/src/nagiosgraph"
     command "./install.pl --check-prereq"
     action :nothing
 end
 
 bash "nagiosgraph compile and install" do
-  cwd "#{Chef::Config[:file_cache_path]}/nagiosgraph"
+  cwd "/usr/local/src/nagiosgraph"
   code <<-EOH
     ./install.pl --layout debian
   EOH
